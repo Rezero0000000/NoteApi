@@ -1,8 +1,8 @@
-const models = require("../models");
+import Notes from "../models/note.models.js";
 
-exports.getAll = async (req, res) => {
+export const getAll = async (req, res) => {
   try{
-   const notes = await models.Note.findAll();
+   const notes = await Notes.findAll();
    res.status(200).send(notes);
   }
   catch {
@@ -12,10 +12,10 @@ exports.getAll = async (req, res) => {
   }
 }
 
-exports.findOne = async (req, res) => {
+export const findOne = async (req, res) => {
   try {
     const id = req.params.id;
-    const data = await models.Note.findByPk(id);
+    const data = await Notes.findByPk(id);
     res.status(200).send(data);
   }
     catch{
@@ -25,7 +25,7 @@ exports.findOne = async (req, res) => {
   }
 }
 
-exports.create = async(req, res) => {
+export const create = async(req, res) => {
   
   if(!req.body.title){
     res.status(500).send({
@@ -40,7 +40,7 @@ exports.create = async(req, res) => {
   };
   
   try{
-    const note = await models.Note.create(req.body);
+    const note = await Notes.create(req.body);
     res.status(200).send(note);
   }
   catch{
@@ -50,10 +50,10 @@ exports.create = async(req, res) => {
   }
 }
 
-exports.update = async(req, res) => {
+export const update = async(req, res) => {
   try {
     const id = req.params.id;
-    const note = await models.Note.update(req.body, {
+    const note = await Notes.update(req.body, {
       where: { id: id }
     });
     if(note == 1){
@@ -67,10 +67,10 @@ exports.update = async(req, res) => {
   }
 }
 
-exports.delete = async(req, res) => {
+export const deleteNote = async(req, res) => {
   try{
     const id = req.params.id;
-    const result = await models.Note.destroy({
+    const result = await Notes.destroy({
       where: {id: id}
     })
     if(result == 1){
@@ -84,9 +84,9 @@ exports.delete = async(req, res) => {
   }
 }
 
-exports.deleteAll = async(req, res) => {
+export const deleteAll = async(req, res) => {
   try{
-    await models.Note.destroy({
+    await Notes.destroy({
       where:{},
       truncate: true
     })
@@ -101,9 +101,9 @@ exports.deleteAll = async(req, res) => {
   }
 }
 
-exports.clear = async (req, res) => {
+export const clear = async (req, res) => {
   try{
-    const data = await models.Note.findAll({
+    const data = await Notes.findAll({
       where: {clear:true}
     })
     res.status(200).send(data);

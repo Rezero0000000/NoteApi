@@ -1,4 +1,12 @@
 {
+  "type": "module",
+  "name": "noteapi",
+  "description": "",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
     "body-parser": "^1.20.0",
     "cors": "^2.8.5",
@@ -7,5 +15,16 @@
     "mysql2": "^2.3.3",
     "sequelize": "^6.21.4",
     "sequelize-cli": "^6.4.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Re-kun/NoteApi.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Re-kun/NoteApi/issues"
+  },
+  "homepage": "https://github.com/Re-kun/NoteApi#readme"
 }

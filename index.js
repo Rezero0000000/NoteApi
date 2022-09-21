@@ -1,6 +1,8 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const cors = require("cors");
+import express from "express";
+import cors from "cors";
+import db from "./models/index.js";
+import Notes from "./models/note.models.js";
+import router from "./routes/note.route.js";
 const app = express();
 
 const whiteList = [ "localhost:8081" ];
@@ -15,10 +17,20 @@ let corsOption = {
 }
 
 app.use(cors(corsOption));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
-require("./routes/note.route.js")(app);
+// db
+try {
+  await db.authenticate()
+  console.log("database Connected...")
+  // await Notes.sync()
+}
+catch (error) {
+  console.error(error)
+}
+
+app.use(router);
 app.get("/", (req, res) => {
     res.json({
       message: " Welcome "
