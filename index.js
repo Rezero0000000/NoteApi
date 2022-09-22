@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import db from "./models/index.js";
-import Notes from "./models/note.models.js";
+// import Notes from "./models/note.models.js";
 import router from "./routes/note.route.js";
 const app = express();
 
