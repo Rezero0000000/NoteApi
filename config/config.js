@@ -11,6 +11,7 @@ const config = {
       "database": DB_NAME,
       "host": DB_HOST,
       "dialect": DB_DIALECT,
+      "use_env_variable": "DATABASE_URL",
       "dialectOptions": {
        "ssl": {
             "require": true,
