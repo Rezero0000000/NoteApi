@@ -10,7 +10,13 @@ const config = {
       "password": DB_PASSWORD,
       "database": DB_NAME,
       "host": DB_HOST,
-      "dialect": DB_DIALECT
+      "dialect": DB_DIALECT,
+      "dialectOptions": {
+       "ssl": {
+            "require": true,
+            "rejectUnauthorized": false
+        }
+      }
     },
     "test": {
       "username": "root",
