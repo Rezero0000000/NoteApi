@@ -4,6 +4,8 @@ const DB_PASSWORD = process.env.DB_PASSWORD || "";
 const DB_NAME = process.env.DB_NAME || "noteApi";
 const DB_DIALECT = process.env.DB_DIALECT || "mysql";
 
+console.log(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
+
 const config = {
     "development": {
       "username": DB_USERNAME,
