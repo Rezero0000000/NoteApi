@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import db from "./models/index.js";
-// import Notes from "./models/note.models.js";
+import Notes from "./models/note.models.js";
 import router from "./routes/note.route.js";
 const app = express();
 
@@ -24,7 +24,7 @@ app.use(express.urlencoded({extended: true}));
 try {
   await db.authenticate()
   console.log("database Connected...")
-  // await Notes.sync()
+  await Notes.sync()
 }
 catch (error) {
   console.error(error)
