@@ -6,11 +6,12 @@ export const getAll = async (req, res) => {
    res.status(200).send(notes);
   }
   catch {
-    res.status(400).send({
+    res.status(500).json({
+      status: 500,
       message: "Something wrong i can feel it"
-    })
-  }
-}
+    });
+  };
+};
 
 export const findOne = async (req, res) => {
   try {
@@ -18,71 +19,90 @@ export const findOne = async (req, res) => {
     const data = await Notes.findByPk(id);
     res.status(200).send(data);
   }
-    catch{
-    res.status(500).send({
-      message: "Something wrong i can feelcit"
-    })
-  }
-}
+  catch{
+    res.status(500).json({
+      status: 500,
+      message: "Something wrong i can feel it"
+    });
+  };
+};
 
 export const create = async(req, res) => {
-  
-  if(!req.body.title){
-    res.status(500).send({
-      message: "this content can't be empty"
-    });
-  }
-  
-  const note = {
-    title: req.body.title,
-    description: req.body.description,
-    clear: req.body.clear || false
-  };
-  
   try{
-    const note = await Notes.create(req.body);
+    if(!req.body.title){
+      res.status(500).json({
+        status: 500,
+        message: "this content can't be empty"
+      });
+    };
+    
+    const newNote = {
+      title: req.body.title,
+      description: req.body.description,
+      clear: req.body.clear || false
+    };
+
+    const note = await Notes.create(newNote);
     res.status(200).send(note);
   }
   catch{
-    res.status(500).send({
-      message: "Something wrong i can feelcit"
-    })
-  }
-}
+    res.status(500).json({
+      status: 500,
+      message: "Something wrong i can feel it"
+    });
+  };
+};
 
 export const update = async(req, res) => {
   try {
     const id = req.params.id;
+
     const note = await Notes.update(req.body, {
       where: { id: id }
     });
+
     if(note == 1){
       res.status(200).send("Post was updated successfully");
     }else{
-      res.status(500).send("can't update note with id " + id)
-    }
+      res.status(500).json({
+        status: 500,
+        message: "can't update note with id " + id
+      });
+    };
+
   }
   catch {
-    res.status(500).send("Something wrong i can feel it ");
-  }
-}
+    res.status(500).json({
+      status: 500,
+      message: "Something wrong i can feel it"
+    });
+  };
+};
 
 export const deleteNote = async(req, res) => {
   try{
     const id = req.params.id;
+    
     const result = await Notes.destroy({
       where: {id: id}
     })
+
     if(result == 1){
       res.status(200).send("Post was deleted successfully");
     }else{
-      res.status(500).send("can't deleted note with id " + id)
-    }
+      res.status(500).json({
+        status: 500,
+        message: "can't deleted note with id " + id
+      });
+    };
   }
   catch {
-    res.status(500).send("Something wrong i can feel it ");
-  }
-}
+    res.status(500).json({
+      status: 500,
+      message: "Something wrong i can feel it"
+    });
+  };
+};
 
 export const deleteAll = async(req, res) => {
   try{
@@ -95,9 +115,10 @@ export const deleteAll = async(req, res) => {
     })
   }
   catch {
-    res.status(500).send({
-      message: "Something wrong I can feel it"
-    })
+    res.status(500).json({
+      status: 500,
+      message: "Something wrong i can feel it"
+    });
   }
 }
 
@@ -109,6 +130,9 @@ export const clear = async (req, res) => {
     res.status(200).send(data);
   } 
    catch {
-    res.status(500).send("Something wrong i can feel it ");
-  }
-}
+    res.status(500).json({
+      status: 500,
+      message: "Something wrong i can feel it"
+    });
+  };
+}; 
