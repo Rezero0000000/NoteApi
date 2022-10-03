@@ -1,0 +1,10 @@
+######### PORT #######
+PORT = 8080
+
+
+#### DATABASE CONFIGURATION ####
+
+DB_HOST = localhost
+DB_USERNAME = root
+DB_PASSWORD = 
+DB_NAME = nama_database
