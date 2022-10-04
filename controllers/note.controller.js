@@ -28,7 +28,7 @@ export const findOne = async (req, res) => {
 export const create = async(req, res) => {
   
   if(!req.body.title){
-    res.status(500).send({
+   return  res.status(500).send({
       message: "this content can't be empty"
     });
   }
@@ -41,10 +41,10 @@ export const create = async(req, res) => {
   
   try{
     const note = await Notes.create(req.body);
-    res.status(200).send(note);
+    return res.status(200).send(note);
   }
   catch{
-    res.status(500).send({
+   return  res.status(500).send({
       message: "Something wrong i can feelcit"
     })
   }

@@ -3,6 +3,8 @@ import cors from "cors";
 import db from "./models/index.js";
 import Notes from "./models/note.models.js";
 import router from "./routes/note.route.js";
+import {config} from "dotenv"
+config()
 const app = express();
 
 const whiteList = [ "localhost:8081" ];
@@ -19,7 +21,6 @@ let corsOption = {
 app.use(cors(corsOption));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-
 // db
 try {
   await db.authenticate()
