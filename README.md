@@ -1,4 +1,4 @@
-## NoteApi
+# NoteApi
 
 - Sebuah aplikasi crud mysql untuk mengelola catatan
 - dibuat dengan nodejs express dan mysql
