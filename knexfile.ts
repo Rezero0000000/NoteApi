@@ -11,7 +11,8 @@ const config: { [key: string]: Knex.Config } = {
       user: 'root',
       password: '',
       database: 'typescript2',
-    }
+    },
+    useNullAsDefault: true,
   },
 
   staging: {
