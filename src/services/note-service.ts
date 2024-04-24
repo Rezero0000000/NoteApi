@@ -15,14 +15,22 @@ export class NoteService {
         });
 
         const note = await NoteService.checkNoteMustExsist(dataId[0]);
+
         return ToNoteResponse(note)
     }
 
     static async checkNoteMustExsist (id: number) {
         const note = await db("notes").where("id", id).first();
         if (!note) {
+            console.log("Not found")
             return 0
         }
         return note;
+    }
+
+    static async get (id:number): Promise<NoteRespone> {
+        const note = await NoteService.checkNoteMustExsist(id);
+        return ToNoteResponse(note);
+    
     }
 }

@@ -8,3 +8,4 @@ web.get("/", (req: Request, response: Response) => {
     response.send("Hello World");
 })
 web.post("/notes", NoteController.create);
+web.get("/note/:noteId", NoteController.get);
