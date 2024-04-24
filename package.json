@@ -16,7 +16,6 @@
     "@jest/globals": "^29.7.0",
     "@types/bcrypt": "^5.0.2",
     "@types/jest": "^29.5.12",
-    "@types/knex": "^0.16.1",
     "@types/supertest": "^6.0.2",
     "@types/uuid": "^9.0.8",
     "babel-jest": "^29.7.0",
@@ -27,12 +26,9 @@
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
-    "better-sqlite3": "^9.5.0",
     "hyper-express": "^6.15.2",
     "knex": "^3.1.0",
-    "mysql": "^2.18.1",
     "mysql2": "^3.9.7",
-    "sqlite3": "^5.1.7",
     "uuid": "^9.0.1",
     "winston": "^3.13.0",
     "zod": "^3.23.0"
