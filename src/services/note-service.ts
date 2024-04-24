@@ -6,7 +6,7 @@ export class NoteService {
 
         const response = await db("notes").insert({
             title: "Bad day",
-            category: "bad",
+            category: "thought",
             message: "I am bad"
         });
 
