@@ -1,3 +1,12 @@
+export type Note = {
+    id: number,
+    title: string,
+    category: string,
+    message: string,
+    created_at: string,
+    update_at: string
+}
+
 export type CreateNoteRequest = {
     title: string,
     category: string,
@@ -13,7 +22,7 @@ export type NoteRespone = {
     update_at: string
 }
 
-export function ToNoteResponse(note: any): NoteRespone {
+export function ToNoteResponse(note: Note): NoteRespone {
     return {
         id: note.id,
         title: note.title,

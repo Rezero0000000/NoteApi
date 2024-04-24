@@ -7,7 +7,7 @@ export class NoteController {
         try {
             const request: CreateNoteRequest = await req.json() as CreateNoteRequest;
             const response = await NoteService.create(request);
-
+            
             res.status(200).json({
                 data: response
             });

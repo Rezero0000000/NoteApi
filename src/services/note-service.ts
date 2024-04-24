@@ -2,20 +2,27 @@ import { Request} from "hyper-express";
 import { db } from "../database/mysql.config";
 import { Validation } from "../validation/validation";
 import { NoteValidation } from "../validation/note-validation";
-import { CreateNoteResponse } from "../model/note-model";
+import { CreateNoteRequest, NoteRespone, ToNoteResponse } from "../model/note-model";
 
 export class NoteService {
-    static async create (request: CreateNoteResponse): Promise<> {
-
-// console.log(request)
+    static async create (request: CreateNoteRequest): Promise<NoteRespone> {
         const validateRequest = await Validation.validate(NoteValidation.CREATE, request);
        
-        const response = await db("notes").insert({
+        const dataId = await db("notes").insert({
             title: validateRequest.title,
             category: validateRequest.category,
             message: validateRequest.message
         });
 
-    
+        const note = await NoteService.checkNoteMustExsist(dataId[0]);
+        return ToNoteResponse(note)
+    }
+
+    static async checkNoteMustExsist (id: number) {
+        const note = await db("notes").where("id", id).first();
+        if (!note) {
+            return 0
+        }
+        return note;
     }
 }
