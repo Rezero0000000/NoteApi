@@ -9,3 +9,4 @@ web.get("/", (req: Request, response: Response) => {
 })
 web.post("/notes", NoteController.create);
 web.get("/note/:noteId", NoteController.get);
+web.put("/note/:noteId", NoteController.update);

@@ -13,6 +13,12 @@ export type CreateNoteRequest = {
     message: string
 }
 
+export type UpdateNoteRequest = {
+    title?: string | null,
+    category?: string | null,
+    message?: string | null
+}
+
 export type NoteRespone = {
     id: number,
     title: string,
