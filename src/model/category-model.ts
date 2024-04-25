@@ -3,6 +3,11 @@ export type CreateCategoryRequest = {
     slug: string
 }
 
+export type UpdateCategoryRequest = {
+    title?: string | null,
+    slug?: string | null
+}
+
 
 export type Category = {
     id: number,

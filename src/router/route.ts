@@ -13,3 +13,6 @@ web.get("/api/notes", NoteController.list);
 // Categories
 web.post("/api/category", CategoryController.create);
 web.get("/api/category/:categoryId", CategoryController.get);
+web.put("/api/category/:categoryId", CategoryController.update);
+web.delete("/api/category/:categoryId", CategoryController.remove);
+
