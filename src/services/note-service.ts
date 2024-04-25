@@ -2,7 +2,7 @@ import { Request} from "hyper-express";
 import { db } from "../database/mysql.config";
 import { Validation } from "../validation/validation";
 import { NoteValidation } from "../validation/note-validation";
-import { CreateNoteRequest, NoteRespone, ToNoteResponse, UpdateNoteRequest } from "../model/note-model";
+import { CreateNoteRequest, Note, NoteRespone, ToNoteResponse, UpdateNoteRequest } from "../model/note-model";
 
 export class NoteService {
     static async create (request: CreateNoteRequest): Promise<NoteRespone> {
@@ -47,4 +47,21 @@ export class NoteService {
         const note = await NoteService.checkNoteMustExsist(id);
         return ToNoteResponse(note);
     }
+
+    static async remove (id:number): Promise<string> {
+        const response = await db("notes").where("id", id).del();
+        if (!response) {
+            return "Note not found"
+        }
+        return "OK"
+    }
+
+    static async list (): Promise<Array<Note>>  {
+        const notes = await db.select().from("notes");
+        if (!notes) {
+            console.log("Note not found")
+        }
+        return notes
+    }
+
 }

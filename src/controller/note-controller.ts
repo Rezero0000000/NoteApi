@@ -49,4 +49,34 @@ export class NoteController {
             })
         }
     }
+
+    
+    static async remove (req: Request, res: Response, next: MiddlewareNext) {
+        try {
+            const noteId = Number(req.params.noteId);
+            const response = await NoteService.remove(noteId);
+            res.status(200).json({
+                data: response
+            });
+        }
+        catch(e) {
+            res.status(400).json({
+                error: e
+            })
+        }
+    }
+
+    static async list (req: Request, res: Response, next: MiddlewareNext) {
+        try {
+            const response = await NoteService.list();
+            res.status(200).json({
+                data: response
+            });
+        }
+        catch(e) {
+            res.status(400).json({
+                error: e
+            })
+        }
+    }
 }
