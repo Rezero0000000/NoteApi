@@ -1,9 +1,9 @@
-# Note Api
+# Category Api
 <br>
 
-## Create note
+## Create category
 
-Endpoint: POST /api/note
+Endpoint: POST /api/category
  
 Request Header :
 - X-API-TOKEN : token
@@ -14,9 +14,8 @@ Request Header :
 
 ```json
 {
-  "title" : "Hello world",
-  "category" : "Life",
-  "Message" : "Everything will be okay",
+  "title" : "Sport",
+  "slug" : "sport",
 }
 ```
 
@@ -26,9 +25,8 @@ Request Header :
 {
   "data" : {
     "id" : 1,
-    "title" : "Hello world",
-    "category" : "Life",
-    "Message" : "Everything will be okay",
+    "title" : "Sport",
+    "slug" : "sport",
     "created-at" : "2024-04-24 09:09:32",
     "update-at" : "2024-04-24 09:09:32"
   }
@@ -47,9 +45,9 @@ Request Header :
 <br><br><br>
 <!-- ---------------------------------------------------------------------------- -->
 
-## Get note
+## Get category
 
-Endpoint: GET /api/note/:noteId
+Endpoint: GET /api/category/:categoryId
  
 Request Header :
 - X-API-TOKEN : token
@@ -62,9 +60,8 @@ Request Header :
 {
   "data" : {
     "id" : 1,
-    "title" : "Hello world",
-    "category" : "Life",
-    "Message" : "Everything will be okay",
+    "title" : "Sport",
+    "slug" : "sport",
     "created-at" : "2024-04-24 09:09:32",
     "update-at" : "2024-04-24 09:09:32"
   }
@@ -84,9 +81,9 @@ Request Header :
 <!-- ---------------------------------------------------------------------------- -->
 
 
-## Update note
+## Update category
 
-Endpoint: PUT /api/note/:noteId
+Endpoint: PUT /api/category/:categoryId
  
 Request Header :
 - X-API-TOKEN : token
@@ -97,9 +94,8 @@ Request Header :
 
 ```json
 {
-  "title" : "Hello world",
-  "category" : "Life",
-  "Message" : "Everything will be okay",
+    "title" : "Sport",
+    "slug" : "sport",
 }
 ```
 
@@ -109,9 +105,8 @@ Request Header :
 {
   "data" : {
     "id" : 1,
-    "title" : "Hello world",
-    "category" : "Life",
-    "Message" : "Everything will be okay",
+    "title" : "Sport",
+    "slug" : "sport",
     "created-at" : "2024-04-24 09:09:32",
     "update-at" : "2024-04-24 09:09:32"
   }
@@ -130,9 +125,9 @@ Request Header :
 <br><br><br>
 <!-- ---------------------------------------------------------------------------- -->
 
-## Delete note
+## Delete category
 
-Endpoint: DELETE /api/note/:noteId
+Endpoint: DELETE /api/category/:categoryId
  
 Request Header :
 - X-API-TOKEN : token
@@ -159,15 +154,13 @@ Request Header :
 <br><br><br>
 <!-- ---------------------------------------------------------------------------- -->
 
-## Search note
+## Search Category
 
-Endpoint: GET /api/notes
+Endpoint: GET /api/categories
 Query Parameter :
-- name : string, contact first name or contact last name, optional
-- phone : string, contact phone, optional
-- email : string, contact email, optional
-- page : number, default 1
-- size : number, default 10
+- title : string
+- slug : string
+
  
 Request Header :
 - X-API-TOKEN : token
@@ -181,17 +174,15 @@ Request Header :
   "data" :[
      {
         "id" : 1,
-        "title" : "Hello world",
-        "category" : "Life",
-        "Message" : "Everything will be okay",
+        "title" : "Sport",
+        "slug" : "sport",
         "created-at" : "2024-04-24 09:09:32",
         "update-at" : "2024-04-24 09:09:32"
     },
      {
         "id" : 2,
-        "title" : "Hello world",
-        "category" : "Life",
-        "Message" : "Everything will be okay",
+        "title" : "Sport",
+        "slug" : "sport",
         "created-at" : "2024-04-24 09:09:32",
         "update-at" : "2024-04-24 09:09:32"
     }
