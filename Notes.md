@@ -33,3 +33,8 @@ npm install --save-dev @babel/preset-typescript
 
 # Menginstal @jest/globals untuk development
 npm install --save-dev @jest/globals
+
+
+
+kalau knex migrate:latest dia eksekusi semua
+tapi knex migrate:rollback aatau lainya di eksekusi 1 1 jadi harus pake flag --all

@@ -2,7 +2,7 @@ import type { Knex } from "knex";
 
 // Update with your config settings.
 
-export const config: { [key: string]: Knex.Config } = {
+const config: { [key: string]: Knex.Config } = {
   development: {
     client: "mysql2",
     connection: {
@@ -11,6 +11,9 @@ export const config: { [key: string]: Knex.Config } = {
       user: 'root',
       password: '',
       database: 'typescript3',
+    },
+    migrations: {
+      tableName: "knex_migrations"
     }
   },
 

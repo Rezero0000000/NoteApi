@@ -7,6 +7,10 @@ export async function up(knex: Knex): Promise<void> {
         table.string("title").notNullable();
         table.string("category").notNullable().unique();
         table.string("message").notNullable();
+
+        table.integer('user_id').unsigned();
+        table.foreign('user_id').references('users.id');
+
         table.integer('category_id').unsigned();
         table.foreign('category_id').references('categories.id');
         table.timestamps(false, true);
