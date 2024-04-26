@@ -11,7 +11,8 @@ export class NoteService {
         const dataId = await db("notes").insert({
             title: validateRequest.title,
             category: validateRequest.category,
-            message: validateRequest.message
+            message: validateRequest.message,
+            category_id: validateRequest.category_id
         });
 
         const note = await NoteService.checkNoteMustExsist(dataId[0]);
@@ -29,7 +30,12 @@ export class NoteService {
     }
 
     static async get (id:number): Promise<NoteRespone> {
-        const note = await NoteService.checkNoteMustExsist(id);
+        // const note = await NoteService.checkNoteMustExsist(id);
+        const note = await db("notes")
+        .where("id", id)
+        .leftJoin("categories", "notes.category_id", "categories.id")
+        .first();
+
         return ToNoteResponse(note);
     
     }

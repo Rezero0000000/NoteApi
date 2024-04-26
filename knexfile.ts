@@ -10,9 +10,8 @@ export const config: { [key: string]: Knex.Config } = {
       port: 3306,
       user: 'root',
       password: '',
-      database: 'typescript2',
-    },
-    useNullAsDefault: true,
+      database: 'typescript3',
+    }
   },
 
   staging: {

@@ -7,7 +7,7 @@ const database = knex({
         port: 3306,
         user: "root",
         password: "",
-        database: "typescript2"
+        database: "typescript3"
     },
 });
 
