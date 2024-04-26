@@ -19,5 +19,19 @@ export class UserController {
     }
 
     static async get (req: Request, res: Response) {
+        try {
+            const userId = Number(req.params.userId);
+            const response = await UserService.get(userId);
+
+            res.status(200).json({
+                data: response
+            })
+        }
+        catch (e) {
+            res.status(400).json({
+                error: e
+            })
+        }
+
     }
 }

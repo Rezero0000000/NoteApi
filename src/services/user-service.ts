@@ -27,4 +27,9 @@ export class UserService {
         }
         return user
     }
+
+    static async get (id: number): Promise<UserResponse> {
+        const user = await UserService.checkUserMustExsist(id);
+        return ToUserResponse(user);
+    }
 }
