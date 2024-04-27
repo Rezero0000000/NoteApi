@@ -7,7 +7,7 @@ export const web = new Server();
 // Users 
 web.post("/api/user", UserController.create);
 web.get("/api/user/:userId", UserController.get);
-
+web.put("/api/user/:userId", UserController.update);
 
 // Categories
 web.post("/api/category", CategoryController.create);

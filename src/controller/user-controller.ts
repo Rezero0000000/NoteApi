@@ -1,5 +1,5 @@
 import { Request, Response } from "hyper-express";
-import { CreateUserRequest } from "../model/user-model";
+import { CreateUserRequest, UpdateUserRequest } from "../model/user-model";
 import { UserService } from "../services/user-service";
 
 export class UserController {
@@ -32,6 +32,23 @@ export class UserController {
                 error: e
             })
         }
+    }
 
+    
+    static async update(req: Request, res: Response) {
+        try {
+            const request:  UpdateUserRequest = await req.json() as UpdateUserRequest;
+            const userId = Number(req.params.userId);
+
+            const response = await UserService.update(request, userId);
+            res.status(200).json({
+                data: response
+            })
+        }
+        catch (e) {
+            res.status(400).json({
+                error: e
+            })
+        }
     }
 }

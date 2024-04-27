@@ -1,5 +1,5 @@
 import { db } from "../database/mysql.config";
-import { CreateUserRequest, ToUserResponse, UserResponse } from "../model/user-model";
+import { CreateUserRequest, ToUserResponse, UpdateUserRequest, UserResponse } from "../model/user-model";
 import { UserValidation } from "../validation/user-validation";
 import { Validation } from "../validation/validation";
 import bcrypt from "bcrypt";
@@ -31,5 +31,18 @@ export class UserService {
     static async get (id: number): Promise<UserResponse> {
         const user = await UserService.checkUserMustExsist(id);
         return ToUserResponse(user);
+    }
+
+    static async update(request: UpdateUserRequest, id: number): Promise<UserResponse> {
+        const validateRequest = await Validation.validate(UserValidation.UPDATE, request);
+        const dataId = await db("users").where("id", id).update({
+            name: validateRequest.name,
+            username: validateRequest.username,
+            email: validateRequest.email,
+            password: validateRequest.password 
+        });
+
+        const user = await UserService.checkUserMustExsist(id);
+        return ToUserResponse(user)
     }
 }
