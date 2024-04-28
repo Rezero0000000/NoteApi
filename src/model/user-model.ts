@@ -4,7 +4,8 @@ export type User = {
     username: string,
     email: string,
     password: string,
-    created_at: string,
+    token?: string | null,
+    created_at: string
 }
 
 export type UserResponse = {
@@ -13,7 +14,13 @@ export type UserResponse = {
     username: string,
     email: string,
     password: string,
+    token?: string | null,
     created_at: string,
+}
+
+export type Login = {
+    email: string,
+    password: string
 }
 
 export type CreateUserRequest = {

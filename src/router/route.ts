@@ -2,10 +2,22 @@ import { NoteController } from "../controller/note-controller";
 import { Server } from "hyper-express";
 import { CategoryController } from "../controller/category-controller";
 import { UserController } from "../controller/user-controller";
+import { authMiddleware } from "../middleware/auth-middleware";
 export const web = new Server();
 
+web.use((req, res, next) => {
+    if (req.path !== '/api/login' && req.path !== '/api/user') {
+        authMiddleware(req, res, next);
+    } else {
+        next();
+    }
+});
+
+// Public apis
+web.post("/api/user", UserController.register);
+web.post("/api/login", UserController.login);
+
 // Users 
-web.post("/api/user", UserController.create);
 web.get("/api/user/:userId", UserController.get);
 web.put("/api/user/:userId", UserController.update);
 

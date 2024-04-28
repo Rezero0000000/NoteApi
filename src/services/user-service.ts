@@ -1,11 +1,12 @@
 import { db } from "../database/mysql.config";
-import { CreateUserRequest, ToUserResponse, UpdateUserRequest, UserResponse } from "../model/user-model";
+import { CreateUserRequest, Login, ToUserResponse, UpdateUserRequest, UserResponse } from "../model/user-model";
 import { UserValidation } from "../validation/user-validation";
 import { Validation } from "../validation/validation";
 import bcrypt from "bcrypt";
+import { v4 as uuid  } from "uuid";
 
 export class UserService {  
-    static async create(request: CreateUserRequest): Promise<UserResponse> {
+    static async register(request: CreateUserRequest): Promise<UserResponse> {
         const validateRequest = await Validation.validate(UserValidation.CREATE, request);
         validateRequest.password = await bcrypt.hash(validateRequest.password, 10);
         const dataId = await db("users").insert({
@@ -17,6 +18,28 @@ export class UserService {
 
         const user = await UserService.checkUserMustExsist(dataId[0]);
         return ToUserResponse(user)
+    }
+
+    static async login(request: Login): Promise<UserResponse> {
+        const validateRequest = await Validation.validate(UserValidation.LOGIN, request);
+
+        const email = await db("users").where("email", validateRequest.email).first();
+        if (!email) {
+            console.log("Email salah")
+        }
+
+        const password = await bcrypt.compare(validateRequest.password, email.password);
+        if (!password) {
+            console.log("Password salah")
+        }
+
+        const token = uuid();
+        const dataId = await db("users").where("email", validateRequest.email).update({
+            token: token
+        });
+        const user = await db("users").where("email", validateRequest.email).first();
+        user.token = token;
+        return user;
     }
 
     static async checkUserMustExsist (id: number) {
