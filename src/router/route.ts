@@ -1,5 +1,5 @@
 import { NoteController } from "../controller/note-controller";
-import { Server } from "hyper-express";
+import {  Server } from "hyper-express";
 import { CategoryController } from "../controller/category-controller";
 import { UserController } from "../controller/user-controller";
 import { authMiddleware } from "../middleware/auth-middleware";

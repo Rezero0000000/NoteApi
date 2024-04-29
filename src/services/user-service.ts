@@ -1,3 +1,4 @@
+import { Response } from "hyper-express";
 import { db } from "../database/mysql.config";
 import { CreateUserRequest, Login, ToUserResponse, UpdateUserRequest, UserResponse } from "../model/user-model";
 import { UserValidation } from "../validation/user-validation";
@@ -9,6 +10,7 @@ export class UserService {
     static async register(request: CreateUserRequest): Promise<UserResponse> {
         const validateRequest = await Validation.validate(UserValidation.CREATE, request);
         validateRequest.password = await bcrypt.hash(validateRequest.password, 10);
+
         const dataId = await db("users").insert({
             name: validateRequest.name,
             username: validateRequest.username,
@@ -20,18 +22,27 @@ export class UserService {
         return ToUserResponse(user)
     }
 
-    static async login(request: Login): Promise<UserResponse> {
+    static async login(request: Login, res: Response): Promise<UserResponse> {
         const validateRequest = await Validation.validate(UserValidation.LOGIN, request);
 
         const email = await db("users").where("email", validateRequest.email).first();
         if (!email) {
-            console.log("Email salah")
+
+            console.log("GAGAL")
+          res.status(404).json({
+            message: "Data not found"
+          })
+          res.end();
         }
 
         const password = await bcrypt.compare(validateRequest.password, email.password);
         if (!password) {
-            console.log("Password salah")
-        }
+            console.log("GAGAL")
+            res.status(404).json({
+              message: "Data not found"
+            })
+            res.end();
+          }
 
         const token = uuid();
         const dataId = await db("users").where("email", validateRequest.email).update({

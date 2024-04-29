@@ -1,12 +1,15 @@
 import { Request, Response } from "hyper-express";
 import { CreateUserRequest, Login, UpdateUserRequest } from "../model/user-model";
 import { UserService } from "../services/user-service";
+import { Console } from "winston/lib/winston/transports";
+import { response } from "express";
 
 export class UserController {
     static async register(req: Request, res: Response) {
         try {
             const request:  CreateUserRequest = await req.json() as CreateUserRequest;
             const response = await UserService.register(request);
+
             res.status(200).json({
                 data: response
             })
@@ -21,8 +24,7 @@ export class UserController {
     static async login (req: Request, res: Response) {
         try {
             const request: Login = await req.json() as Login;
-            const response = await UserService.login(request);
-
+            const response = await UserService.login(request, res);
             res.status(200).json({
                 data: response
             })
