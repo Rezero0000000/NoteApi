@@ -30,27 +30,6 @@ export class NoteService {
     }
 
     static async get (id:number):Promise <string>  {
-        // const note = await NoteService.checkNoteMustExsist(id);
-        // const note = await db("notes")
-        // .where("notes.id", id)
-        // .leftJoin("categories", "notes.category_id", "categories.id")
-        // .first();
-
-        // const note = await db('notes')
-        // .where('notes.id', id)
-        // .join('categories', 'notes.category_id', '=', 'categories.id')
-        // .select({
-        //         id: 'notes.id',
-        //         title: 'notes.title',
-        //         category: 'notes.category',
-        //         slug: 'categories.slug',
-        //         message: 'notes.message',
-        //         category_id: 'notes.category_id',
-        //         created_at: 'notes.created_at',
-        // })
-        // .select('notes.id', 'categories.title', 'categories.slug');
-
-
         const note = await db('categories')
         .where('categories.id', 1)
         .join('notes', 'categories.id', 'notes.category_id')
@@ -59,11 +38,7 @@ export class NoteService {
           db.raw('JSON_ARRAYAGG(JSON_OBJECT("id", notes.id, "title", notes.title, "message", notes.message, "created_at", notes.created_at)) AS notes')
         )
         .groupBy('categories.id').first();
-
-
-        console.log(note)
-
-    return "hi"
+        return "hi"
     }
 
     static async update (request: UpdateNoteRequest, id: number) {
