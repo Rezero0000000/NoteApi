@@ -6,7 +6,7 @@ import { authMiddleware } from "../middleware/auth-middleware";
 export const web = new Server();
 
 web.use((req, res, next) => {
-    if (req.path !== '/api/login' && req.path !== '/api/user') {
+    if (req.path !== '/api/login' && req.path !== '/api/register') {
         authMiddleware(req, res, next);
     } else {
         next();
@@ -14,12 +14,12 @@ web.use((req, res, next) => {
 });
 
 // Public apis
-web.post("/api/user", UserController.register);
+web.post("/api/register", UserController.register);
 web.post("/api/login", UserController.login);
 
 // Users 
-web.get("/api/user/:userId", UserController.get);
-web.put("/api/user/:userId", UserController.update);
+web.get("/api/user/", UserController.get);
+web.put("/api/user/", UserController.update);
 
 // Categories
 web.post("/api/category", CategoryController.create);

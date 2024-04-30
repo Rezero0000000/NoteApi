@@ -7,9 +7,18 @@ import bcrypt from "bcrypt";
 import { v4 as uuid  } from "uuid";
 
 export class UserService {  
-    static async register(request: CreateUserRequest): Promise<UserResponse> {
+    static async register(request: CreateUserRequest, res: Response): Promise<UserResponse> {
+
         const validateRequest = await Validation.validate(UserValidation.CREATE, request);
         validateRequest.password = await bcrypt.hash(validateRequest.password, 10);
+
+        const isUsernameUsed = await db("users").where("username", validateRequest.username).first();
+        if (isUsernameUsed) {
+            res.status(404).json({
+                message: "Username is already use"
+              })
+              res.end();
+        }
 
         const dataId = await db("users").insert({
             name: validateRequest.name,
@@ -18,34 +27,31 @@ export class UserService {
             password: validateRequest.password 
         });
 
-        const user = await UserService.checkUserMustExsist(dataId[0]);
+        const user = await UserService.checkUserMustExsist(dataId[0], res);
         return ToUserResponse(user)
     }
 
     static async login(request: Login, res: Response): Promise<UserResponse> {
         const validateRequest = await Validation.validate(UserValidation.LOGIN, request);
-
         const email = await db("users").where("email", validateRequest.email).first();
-        if (!email) {
 
-            console.log("GAGAL")
-          res.status(404).json({
-            message: "Data not found"
+        if (!email) {
+          res.status(400).json({
+            message: "Email or password is wrong"
           })
           res.end();
         }
 
         const password = await bcrypt.compare(validateRequest.password, email.password);
         if (!password) {
-            console.log("GAGAL")
-            res.status(404).json({
-              message: "Data not found"
+            res.status(400).json({
+                message: "Email or password is wrong"
             })
             res.end();
           }
 
         const token = uuid();
-        const dataId = await db("users").where("email", validateRequest.email).update({
+        await db("users").where("email", validateRequest.email).update({
             token: token
         });
         const user = await db("users").where("email", validateRequest.email).first();
@@ -53,30 +59,32 @@ export class UserService {
         return user;
     }
 
-    static async checkUserMustExsist (id: number) {
+    static async checkUserMustExsist (id: number, res: Response) {
         const user = await db("users").where("id", id).first();
         if (!user) {
-            console.log("Not found")
-            return 0
+            res.status(404).json({
+                message: "User not found"
+            })
+            res.end();
         }
         return user
     }
 
-    static async get (id: number): Promise<UserResponse> {
-        const user = await UserService.checkUserMustExsist(id);
+    static async get (id: number, res: Response): Promise<UserResponse> {
+        const user = await UserService.checkUserMustExsist(id, res);
         return ToUserResponse(user);
     }
 
-    static async update(request: UpdateUserRequest, id: number): Promise<UserResponse> {
+    static async update(request: UpdateUserRequest, id: number, res: Response): Promise<UserResponse> {
         const validateRequest = await Validation.validate(UserValidation.UPDATE, request);
-        const dataId = await db("users").where("id", id).update({
+        await db("users").where("id", id).update({
             name: validateRequest.name,
             username: validateRequest.username,
             email: validateRequest.email,
             password: validateRequest.password 
         });
 
-        const user = await UserService.checkUserMustExsist(id);
+        const user = await UserService.checkUserMustExsist(id, res);
         return ToUserResponse(user)
     }
 }

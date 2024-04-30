@@ -1,9 +1,10 @@
 import { Request, Response, MiddlewareNext } from "hyper-express";
 import { NoteService } from "../services/note-service";
 import { CreateNoteRequest, UpdateNoteRequest} from "../model/note-model";
+import { UserRequest } from "../type/user-request";
 
 export class NoteController {
-    static async create (req: Request, res: Response, next: MiddlewareNext){
+    static async create (req: UserRequest, res: Response, next: MiddlewareNext){
         try {
             const request: CreateNoteRequest = await req.json() as CreateNoteRequest;
             const response = await NoteService.create(request);
@@ -18,7 +19,7 @@ export class NoteController {
         }
     }
 
-    static async get (req: Request, res: Response, next: MiddlewareNext) {
+    static async get (req: UserRequest, res: Response, next: MiddlewareNext) {
         try {
             const noteId = Number(req.params.noteId);
             const response = await NoteService.get(noteId);
@@ -33,7 +34,7 @@ export class NoteController {
         }
     }
 
-    static async update (req: Request, res: Response, next: MiddlewareNext) {
+    static async update (req: UserRequest, res: Response, next: MiddlewareNext) {
         try {
             const request: UpdateNoteRequest = await req.json() as UpdateNoteRequest;
             const noteId = Number(req.params.noteId);
@@ -51,7 +52,7 @@ export class NoteController {
     }
 
     
-    static async remove (req: Request, res: Response, next: MiddlewareNext) {
+    static async remove (req: UserRequest, res: Response, next: MiddlewareNext) {
         try {
             const noteId = Number(req.params.noteId);
             const response = await NoteService.remove(noteId);
@@ -66,7 +67,7 @@ export class NoteController {
         }
     }
 
-    static async list (req: Request, res: Response, next: MiddlewareNext) {
+    static async list (req: UserRequest, res: Response, next: MiddlewareNext) {
         try {
             const response = await NoteService.list();
             res.status(200).json({

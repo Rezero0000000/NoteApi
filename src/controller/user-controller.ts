@@ -1,14 +1,13 @@
 import { Request, Response } from "hyper-express";
 import { CreateUserRequest, Login, UpdateUserRequest } from "../model/user-model";
 import { UserService } from "../services/user-service";
-import { Console } from "winston/lib/winston/transports";
-import { response } from "express";
+import { UserRequest } from "../type/user-request";
 
 export class UserController {
     static async register(req: Request, res: Response) {
         try {
             const request:  CreateUserRequest = await req.json() as CreateUserRequest;
-            const response = await UserService.register(request);
+            const response = await UserService.register(request, res);
 
             res.status(200).json({
                 data: response
@@ -36,10 +35,10 @@ export class UserController {
         }
     }
 
-    static async get (req: Request, res: Response) {
+    static async get (req: UserRequest, res: Response) {
         try {
-            const userId = Number(req.params.userId);
-            const response = await UserService.get(userId);
+            const userId = req.user!.id
+            const response = await UserService.get(userId, res);
 
             res.status(200).json({
                 data: response
@@ -53,12 +52,12 @@ export class UserController {
     }
 
     
-    static async update(req: Request, res: Response) {
+    static async update(req: UserRequest, res: Response) {
         try {
             const request:  UpdateUserRequest = await req.json() as UpdateUserRequest;
-            const userId = Number(req.params.userId);
+            const userId = req.user!.id
 
-            const response = await UserService.update(request, userId);
+            const response = await UserService.update(request, userId, res);
             res.status(200).json({
                 data: response
             })

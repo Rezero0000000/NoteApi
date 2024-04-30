@@ -1,9 +1,10 @@
 import { Request, Response } from "hyper-express";
 import { CreateCategoryRequest, UpdateCategoryRequest } from "../model/category-model";
 import { CategoryService } from "../services/category-service";
+import { UserRequest } from "../type/user-request";
 
 export class CategoryController {
-    static async create (req: Request, res: Response) {
+    static async create (req: UserRequest, res: Response) {
         try {
             const request: CreateCategoryRequest = await req.json() as CreateCategoryRequest;
             const response = await CategoryService.create(request);
@@ -19,7 +20,7 @@ export class CategoryController {
         }
     }
 
-    static async get (req: Request, res: Response) {
+    static async get (req: UserRequest, res: Response) {
         try {
             const categoryId = Number(req.params.categoryId);
             const response = await CategoryService.get(categoryId);
@@ -35,7 +36,7 @@ export class CategoryController {
     }
 
     
-    static async update (req: Request, res: Response) {
+    static async update (req: UserRequest, res: Response) {
         try {
             const request: UpdateCategoryRequest = await req.json() as UpdateCategoryRequest;
             const categoryId = Number(req.params.categoryId);
@@ -52,7 +53,7 @@ export class CategoryController {
     }
 
     
-    static async remove (req: Request, res: Response) {
+    static async remove (req: UserRequest, res: Response) {
         try {
             const categoryId = Number(req.params.categoryId);
             const response = await CategoryService.remove(categoryId);
