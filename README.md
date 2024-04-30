@@ -2,7 +2,7 @@
 A rest api to manage notes
 
 <div> 
-  <img src='./Images/Screenshot.png' alt='screenshoot 1' width='370'>
+  <img src='./Images/Screenshot.png' alt='Screenshoot' width='370'>
 
 </div>
 
