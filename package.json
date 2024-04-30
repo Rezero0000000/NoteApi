@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --runInBand",
-    "wow": "npx tsc && node ./dist/main.js"
+    "build": "npx tsc --watch",
+    "start": "nodemon ./dist/main"
   },
   "keywords": [],
   "author": "",
