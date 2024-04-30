@@ -5,7 +5,7 @@ export async function up(knex: Knex): Promise<void> {
     return knex.schema.createTable('notes', table => {
         table.increments("id").primary();
         table.string("title").notNullable();
-        table.string("category").notNullable().unique();
+        table.string("category").notNullable();
         table.string("message").notNullable();
 
         table.integer('user_id').unsigned();

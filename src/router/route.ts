@@ -1,8 +1,8 @@
-import { NoteController } from "../controller/note-controller";
-import {  Server } from "hyper-express";
 import { CategoryController } from "../controller/category-controller";
 import { UserController } from "../controller/user-controller";
+import { NoteController } from "../controller/note-controller";
 import { authMiddleware } from "../middleware/auth-middleware";
+import {  Server } from "hyper-express"; 
 export const web = new Server();
 
 web.use((req, res, next) => {

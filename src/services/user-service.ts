@@ -1,14 +1,13 @@
-import { Response } from "hyper-express";
-import { db } from "../database/mysql.config";
 import { CreateUserRequest, Login, ToUserResponse, UpdateUserRequest, UserResponse } from "../model/user-model";
 import { UserValidation } from "../validation/user-validation";
 import { Validation } from "../validation/validation";
-import bcrypt from "bcrypt";
+import { db } from "../database/mysql.config";
+import { Response } from "hyper-express";
 import { v4 as uuid  } from "uuid";
+import bcrypt from "bcrypt";
 
 export class UserService {  
     static async register(request: CreateUserRequest, res: Response): Promise<UserResponse> {
-
         const validateRequest = await Validation.validate(UserValidation.CREATE, request);
         validateRequest.password = await bcrypt.hash(validateRequest.password, 10);
 
@@ -62,6 +61,7 @@ export class UserService {
         });
         const user = await db("users").where("email", validateRequest.email).first();
         user.token = token;
+
         return user;
     }
 
@@ -71,7 +71,7 @@ export class UserService {
         await db("users").where("id", userId).update({
             token: null
         });
-        
+    
         return "OK"
     }
 

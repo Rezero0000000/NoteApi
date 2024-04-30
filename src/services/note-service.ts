@@ -1,10 +1,10 @@
-import { Request, Response} from "hyper-express";
-import { db } from "../database/mysql.config";
-import { Validation } from "../validation/validation";
-import { NoteValidation } from "../validation/note-validation";
 import { CreateNoteRequest, Note, NoteRespone, ToNoteResponse, UpdateNoteRequest } from "../model/note-model";
-import { UserService } from "./user-service";
+import { NoteValidation } from "../validation/note-validation";
+import { Validation } from "../validation/validation";
 import { CategoryService } from "./category-service";
+import { db } from "../database/mysql.config";
+import { UserService } from "./user-service";
+import { Response} from "hyper-express";
 
 export class NoteService {
     static async create (request: CreateNoteRequest, userId:number, res: Response): Promise<NoteRespone> {
@@ -19,7 +19,6 @@ export class NoteService {
             user_id: userId,
             category_id: validateRequest.category_id
         });
-
         const note = await NoteService.checkNoteMustExsist(dataId[0], res);
 
         return ToNoteResponse(note)
@@ -38,7 +37,7 @@ export class NoteService {
 
     static async get (id:number, res: Response):Promise <NoteRespone>  {
         const note = await db('categories')
-        .where('categories.id', 1)
+        .where('categories.id', id)
         .join('notes', 'categories.id', 'notes.category_id')
         .select(
           'categories.*',
@@ -60,7 +59,7 @@ export class NoteService {
         const validateRequest = await Validation.validate(NoteValidation.UPDATE, request);
         await NoteService.checkNoteMustExsist(id, res);
 
-        const noteId = await db("notes").where("id", id).update({
+        await db("notes").where("id", id).update({
             title: validateRequest.title,
             category: validateRequest.category,
             message: validateRequest.message,
@@ -92,5 +91,4 @@ export class NoteService {
         }
         return notes
     }
-
 }

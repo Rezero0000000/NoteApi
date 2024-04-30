@@ -1,8 +1,8 @@
-import { Response } from "hyper-express";
-import { db } from "../database/mysql.config";
-import { Category, CreateCategoryRequest, UpdateCategoryRequest } from "../model/category-model";
+import { CreateCategoryRequest, UpdateCategoryRequest } from "../model/category-model";
 import { CategoryValidation } from "../validation/category-validation";
 import { Validation } from "../validation/validation";
+import { db } from "../database/mysql.config";
+import { Response } from "hyper-express";
 
 export class CategoryService {
     static async create (request: CreateCategoryRequest, res: Response) {

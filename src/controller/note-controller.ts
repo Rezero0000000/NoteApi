@@ -1,6 +1,6 @@
+import { CreateNoteRequest, UpdateNoteRequest} from "../model/note-model";
 import { Request, Response, MiddlewareNext } from "hyper-express";
 import { NoteService } from "../services/note-service";
-import { CreateNoteRequest, UpdateNoteRequest} from "../model/note-model";
 import { UserRequest } from "../type/user-request";
 
 export class NoteController {
@@ -24,7 +24,6 @@ export class NoteController {
     static async get (req: UserRequest, res: Response, next: MiddlewareNext) {
         try {
             const noteId = Number(req.params.noteId);
-            
             const response = await NoteService.get(noteId, res);
             res.status(200).json({
                 data: response

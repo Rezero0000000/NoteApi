@@ -1,7 +1,7 @@
-import { Request, Response } from "hyper-express";
 import { CreateUserRequest, Login, UpdateUserRequest } from "../model/user-model";
 import { UserService } from "../services/user-service";
 import { UserRequest } from "../type/user-request";
+import { Request, Response } from "hyper-express";
 
 export class UserController {
     static async register(req: Request, res: Response) {

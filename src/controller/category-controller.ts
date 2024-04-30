@@ -1,7 +1,7 @@
-import { Request, Response } from "hyper-express";
 import { CreateCategoryRequest, UpdateCategoryRequest } from "../model/category-model";
 import { CategoryService } from "../services/category-service";
 import { UserRequest } from "../type/user-request";
+import { Response } from "hyper-express";
 
 export class CategoryController {
     static async create (req: UserRequest, res: Response) {
