@@ -20,6 +20,7 @@ web.post("/api/login", UserController.login);
 // Users 
 web.get("/api/user/", UserController.get);
 web.put("/api/user/", UserController.update);
+web.delete("/api/logout", UserController.logout)
 
 // Categories
 web.post("/api/category", CategoryController.create);

@@ -35,6 +35,22 @@ export class UserController {
         }
     }
 
+    
+    static async logout (req: UserRequest, res: Response) {
+        try {
+            const userId = req.user!.id
+            const response = await UserService.logout(userId, res);
+            res.status(200).json({
+                data: response
+            })
+        }
+        catch (e) {
+            res.status(400).json({
+                error: e
+            })
+        }
+    }
+
     static async get (req: UserRequest, res: Response) {
         try {
             const userId = req.user!.id

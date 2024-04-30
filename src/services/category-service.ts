@@ -1,37 +1,40 @@
+import { Response } from "hyper-express";
 import { db } from "../database/mysql.config";
 import { Category, CreateCategoryRequest, UpdateCategoryRequest } from "../model/category-model";
 import { CategoryValidation } from "../validation/category-validation";
 import { Validation } from "../validation/validation";
 
 export class CategoryService {
-    static async create (request: CreateCategoryRequest) {
-        const ValidateRequest = await Validation.validate(CategoryValidation.CREATE, request);         
+    static async create (request: CreateCategoryRequest, res: Response) {
+        const ValidateRequest = await Validation.validate(CategoryValidation.CREATE, request);  
         const dataId = await db("categories").insert({
             title: ValidateRequest.title,
             slug: ValidateRequest.slug,
         });
 
-        const category = await CategoryService.checkCategoryMustExsist(dataId[0]);
+        const category = await CategoryService.checkCategoryMustExsist(dataId[0], res);
         return (category)
     }
 
-    static async checkCategoryMustExsist (id: number) {
+    static async checkCategoryMustExsist (id: number, res: Response) {
         const category = await db("categories").where("id", id).first();
         if (!category) {
-            console.log("Not found")
-            return 0
+            res.status(404).json({
+                message: "Category is not found"
+              })
+              res.end();
         }
         return category
     }
 
-    static async get (id: number) {
-        const category = await CategoryService.checkCategoryMustExsist(id);
+    static async get (id: number, res: Response) {
+        const category = await CategoryService.checkCategoryMustExsist(id, res);
         return category
     }
 
-    static async update (request: UpdateCategoryRequest, id: number) {
+    static async update (request: UpdateCategoryRequest, id: number, res: Response) {
         const validateRequest = await Validation.validate(CategoryValidation.UPDATE, request);
-        await CategoryService.checkCategoryMustExsist(id);
+        await CategoryService.checkCategoryMustExsist(id ,res);
 
 
         await db("categories").where("id", id).update({
@@ -39,14 +42,17 @@ export class CategoryService {
             slug: validateRequest.slug,
         });
 
-        const category = await CategoryService.checkCategoryMustExsist(id);
+        const category = await CategoryService.checkCategoryMustExsist(id, res);
         return (category)
     }
 
-    static async remove (id: number): Promise<string>{
+    static async remove (id: number, res: Response): Promise<string>{
         const response = await db("categories").where("id", id).del();
         if (!response) {
-            return "Category not found"
+            res.status(400).json({
+                message: "Failed"
+              })
+              res.end();
         }
         return "OK"
     }

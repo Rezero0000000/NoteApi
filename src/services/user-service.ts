@@ -13,9 +13,15 @@ export class UserService {
         validateRequest.password = await bcrypt.hash(validateRequest.password, 10);
 
         const isUsernameUsed = await db("users").where("username", validateRequest.username).first();
+        const isEmailUsed = await db("users").where("email", validateRequest.email).first();
         if (isUsernameUsed) {
-            res.status(404).json({
+            res.status(400).json({
                 message: "Username is already use"
+              })
+              res.end();
+        } else if (isEmailUsed) {
+            res.status(400).json({
+                message: "Email is already use"
               })
               res.end();
         }
@@ -57,6 +63,16 @@ export class UserService {
         const user = await db("users").where("email", validateRequest.email).first();
         user.token = token;
         return user;
+    }
+
+
+    static async logout (userId: number, res: Response): Promise<string> {
+        await UserService.checkUserMustExsist(userId, res);
+        await db("users").where("id", userId).update({
+            token: null
+        });
+        
+        return "OK"
     }
 
     static async checkUserMustExsist (id: number, res: Response) {
