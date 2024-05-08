@@ -1,5 +1,5 @@
 # NoteApi
-A rest api to manage notes
+A rest api to manage notes.
 
 <div> 
   <img src='./images/Screenshot.png' alt='Screenshoot' width='370'>
